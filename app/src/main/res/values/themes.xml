@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.FajarPro" parent="@style/Theme.Leanback" />
+</resources>
