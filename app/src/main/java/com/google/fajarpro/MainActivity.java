@@ -404,18 +404,19 @@ public class MainActivity extends FragmentActivity {
         this.playerView.setPlayer(this.player);
     }
 
-    private void playChannel(M3UItem channel) {
-        if (channel.getItemUrl().equals(this.selectedUrl)) {
+    private void playChannel(GetChannelResponse.Data channel) {
+        if (channel.getUrl().equals(this.selectedUrl)) {
             fullscreen();
         } else if (this.player == null) {
 
         } else {
-            this.selectedChannel.setText(channel.getItemName());
-            String itemUrl = channel.getItemUrl();
+            this.selectedChannel.setText(channel.getName());
+            String itemUrl = channel.getUrl();
             this.selectedUrl = itemUrl;
             playUrl(itemUrl);
         }
     }
+
 
 //    private void playChannel(M3UItem channel) {
 //        if (channel.getItemUrl().equals(this.selectedUrl)) {
@@ -520,11 +521,14 @@ public class MainActivity extends FragmentActivity {
                         @Override // com.infinitv.p007tv.TVChannelAdapter.OnItemClickListener
                         public final void onItemClick(View view, int i) {
 //                            M3UItem channel = (M3UItem) channels.get(i);
-                            selectedUrl = getChannelResponse.getData().get(i).getUrl();
-                            playUrl(getChannelResponse.getData().get(i).getUrl());
+                            GetChannelResponse.Data channel = getChannelResponse.getData().get(i);
+//                            playUrl(getChannelResponse.getData().get(i).getUrl());
+                            playChannel(channel);
+                            Log.d(TAG, "cek-equal: "+getChannelResponse.getData().get(i).getUrl());
                             selectedChannel.setText(getChannelResponse.getData().get(i).getName());
                         }
                     });
+
                     adapter.setOnFocusChangeListener(new View.OnFocusChangeListener() { // from class: com.infinitv.tv.MainActivity$$ExternalSyntheticLambda0
                         @Override // android.view.View.OnFocusChangeListener
                         public final void onFocusChange(View view, boolean z) {
