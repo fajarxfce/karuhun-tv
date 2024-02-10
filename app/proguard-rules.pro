@@ -19,3 +19,29 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class androidx.appcompat.** { *; }
+-keep class androidx.leanback.** { *; }
+
+-keep class androidx.appcompat.** { *; }
+-keep class androidx.leanback.** { *; }
+
+-keep class com.bumptech.glide.** { *; }
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+-keep class com.google.android.exoplayer2.** { *; }
+
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+-keep class com.squareup.picasso.** { *; }
+
+-keep class com.android.volley.** { *; }
+
+-keep class com.google.fajarpro.response.** { *; }

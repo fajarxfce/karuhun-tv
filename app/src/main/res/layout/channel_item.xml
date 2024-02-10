@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_gravity="center"
-    app:cardBackgroundColor="#88000000">
+    android:layout_marginBottom="@dimen/margin">
 
     <Button
         android:id="@+id/channel_name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="@color/button_bg"
         android:fontFamily="@font/outfit"
         android:textColor="@color/button_text"
-        android:textFontWeight="500"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textFontWeight="500" />
+</LinearLayout>

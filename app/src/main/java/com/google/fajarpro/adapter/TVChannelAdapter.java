@@ -59,6 +59,7 @@ public class TVChannelAdapter extends RecyclerView.Adapter<TVChannelAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 //        M3UItem channel = this.mChannels.get(position);
         Button button = holder.channel;
+        button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
         button.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -67,10 +68,10 @@ public class TVChannelAdapter extends RecyclerView.Adapter<TVChannelAdapter.View
                     if (str != "#000000" && str.length() == 7) {
                         v.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(primaryColor)));
                     } else {
-                        v.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#cccccc")));
+                        v.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9e8a4c")));
                     }
                 } else {
-                    v.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#20ffffff")));
+                    v.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
                 }
                 View.OnFocusChangeListener onFocusChangeListener = focusChangeListener;
                 if (onFocusChangeListener != null) {
@@ -81,11 +82,6 @@ public class TVChannelAdapter extends RecyclerView.Adapter<TVChannelAdapter.View
         button.setText(getChannelResponse.getData().get(position).getName());
 
     }
-
-    public /* synthetic */ void m371lambda$onBindViewHolder$0$cominfinitvtvTVChannelAdapter(View view, boolean focused) {
-
-    }
-
 
     @Override
     public int getItemCount() {
