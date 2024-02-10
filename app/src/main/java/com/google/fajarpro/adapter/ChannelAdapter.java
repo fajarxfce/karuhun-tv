@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.fajarpro.R;
 import com.google.fajarpro.response.GetChannelResponse;
 
-public class TVChannelAdapter extends RecyclerView.Adapter<TVChannelAdapter.ViewHolder> {
+public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHolder> {
     public boolean disable;
     private View.OnFocusChangeListener focusChangeListener;
     private OnItemClickListener listener;
@@ -39,7 +39,7 @@ public class TVChannelAdapter extends RecyclerView.Adapter<TVChannelAdapter.View
         this.focusChangeListener = listener;
     }
 
-    public TVChannelAdapter(GetChannelResponse getChannelResponse) {
+    public ChannelAdapter(GetChannelResponse getChannelResponse) {
         this.getChannelResponse = getChannelResponse;
     }
 
@@ -109,8 +109,8 @@ public class TVChannelAdapter extends RecyclerView.Adapter<TVChannelAdapter.View
         @Override
         public void onClick(View v) {
             int position;
-            if (TVChannelAdapter.this.listener != null && (position = getAbsoluteAdapterPosition()) != -1) {
-                TVChannelAdapter.this.listener.onItemClick(this.itemView, position);
+            if (ChannelAdapter.this.listener != null && (position = getAbsoluteAdapterPosition()) != -1) {
+                ChannelAdapter.this.listener.onItemClick(this.itemView, position);
             }
 
         }

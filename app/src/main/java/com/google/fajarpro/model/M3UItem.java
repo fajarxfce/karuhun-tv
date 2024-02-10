@@ -1,4 +1,4 @@
-package com.google.fajarpro.m3u;
+package com.google.fajarpro.model;
 /*
 Author  : Nurul Fajar
 Email   : cirebonredhat@gmail.com

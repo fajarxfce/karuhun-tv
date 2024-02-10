@@ -1,4 +1,4 @@
-package com.google.fajarpro.m3u;
+package com.google.fajarpro.model;
 /*
 Author  : Nurul Fajar
 Email   : cirebonredhat@gmail.com
@@ -12,8 +12,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import retrofit2.Response;
 
 public class M3ULoader {
     private OnPlaylistLoadedListener listener;

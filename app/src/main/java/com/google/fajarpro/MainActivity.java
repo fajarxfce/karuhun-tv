@@ -40,8 +40,7 @@ import com.google.android.exoplayer2.text.CueGroup;
 import com.google.android.exoplayer2.trackselection.TrackSelectionParameters;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.exoplayer2.video.VideoSize;
-import com.google.fajarpro.adapter.TVChannelAdapter;
-import com.google.fajarpro.m3u.M3UItem;
+import com.google.fajarpro.adapter.ChannelAdapter;
 import com.google.fajarpro.response.GetChannelResponse;
 import com.google.fajarpro.retrofit.RetrofitClient;
 import com.google.fajarpro.util.Key;
@@ -514,11 +513,11 @@ public class MainActivity extends FragmentActivity {
                     }
 
                     RecyclerView rvChannels = (RecyclerView) findViewById(R.id.channel_list);
-                    TVChannelAdapter adapter = new TVChannelAdapter(getChannelResponse);
+                    ChannelAdapter adapter = new ChannelAdapter(getChannelResponse);
                     adapter.setPrimaryColor(primaryColor);
-                    adapter.setOnItemClickListener(new TVChannelAdapter.OnItemClickListener() {
+                    adapter.setOnItemClickListener(new ChannelAdapter.OnItemClickListener() {
 
-                        @Override // com.infinitv.p007tv.TVChannelAdapter.OnItemClickListener
+                        @Override // com.infinitv.p007tv.ChannelAdapter.OnItemClickListener
                         public final void onItemClick(View view, int i) {
 //                            M3UItem channel = (M3UItem) channels.get(i);
                             GetChannelResponse.Data channel = getChannelResponse.getData().get(i);
@@ -570,11 +569,11 @@ public class MainActivity extends FragmentActivity {
 //            playChannel(channels.get(10));
 //        }
 //        RecyclerView rvChannels = (RecyclerView) findViewById(R.id.channel_list);
-//        TVChannelAdapter adapter = new TVChannelAdapter(channels);
+//        ChannelAdapter adapter = new ChannelAdapter(channels);
 //        adapter.setPrimaryColor(this.primaryColor);
-//        adapter.setOnItemClickListener(new TVChannelAdapter.OnItemClickListener() {
+//        adapter.setOnItemClickListener(new ChannelAdapter.OnItemClickListener() {
 //
-//            @Override // com.infinitv.p007tv.TVChannelAdapter.OnItemClickListener
+//            @Override // com.infinitv.p007tv.ChannelAdapter.OnItemClickListener
 //            public final void onItemClick(View view, int i) {
 //                M3UItem channel = (M3UItem) channels.get(i);
 //                playChannel(channel);
