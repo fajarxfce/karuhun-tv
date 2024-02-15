@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -513,7 +514,7 @@ public class MainActivity extends FragmentActivity {
                     }
 
                     RecyclerView rvChannels = (RecyclerView) findViewById(R.id.channel_list);
-                    ChannelAdapter adapter = new ChannelAdapter(getChannelResponse);
+                    ChannelAdapter adapter = new ChannelAdapter(MainActivity.this, getChannelResponse);
                     adapter.setPrimaryColor(primaryColor);
                     adapter.setOnItemClickListener(new ChannelAdapter.OnItemClickListener() {
 
@@ -521,7 +522,7 @@ public class MainActivity extends FragmentActivity {
                         public final void onItemClick(View view, int i) {
 //                            M3UItem channel = (M3UItem) channels.get(i);
                             GetChannelResponse.Data channel = getChannelResponse.getData().get(i);
-//                            playUrl(getChannelResponse.getData().get(i).getUrl());
+                            playUrl(getChannelResponse.getData().get(i).getUrl());
                             playChannel(channel);
                             Log.d(TAG, "cek-equal: "+getChannelResponse.getData().get(i).getUrl());
                             selectedChannel.setText(getChannelResponse.getData().get(i).getName());
@@ -538,8 +539,10 @@ public class MainActivity extends FragmentActivity {
                     });
                     rvChannels.setAdapter(adapter);
                     rvChannels.addItemDecoration(new SpacesItemDecoration(5));
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-                    rvChannels.setLayoutManager(layoutManager);
+//                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+//                    rvChannels.setLayoutManager(layoutManager);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
+                    rvChannels.setLayoutManager(gridLayoutManager);
 
                 } else {
 //                    progressBar.setVisibility(View.GONE);

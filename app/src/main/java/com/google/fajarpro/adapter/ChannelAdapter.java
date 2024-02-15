@@ -12,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.fajarpro.R;
@@ -26,6 +29,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
 //    private final List<M3UItem> mChannels;
     private String primaryColor = "#000000";
     private GetChannelResponse getChannelResponse;
+    private Context context;
 
     public interface OnItemClickListener {
         void onItemClick(View view, int i);
@@ -39,8 +43,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         this.focusChangeListener = listener;
     }
 
-    public ChannelAdapter(GetChannelResponse getChannelResponse) {
+    public ChannelAdapter(Context context,GetChannelResponse getChannelResponse) {
         this.getChannelResponse = getChannelResponse;
+        this.context =context;
     }
 
 
@@ -50,7 +55,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View channelView = inflater.inflate(R.layout.channel_item, parent, false);
+        View channelView = inflater.inflate(R.layout.channel_adapter, parent, false);
         return new ViewHolder(channelView);
 
     }
@@ -58,20 +63,16 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 //        M3UItem channel = this.mChannels.get(position);
-        Button button = holder.channel;
-        button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
-        button.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        holder.cardChannel.setCardBackgroundColor(ContextCompat.getColor(context, R.color.transparent));
+        holder.cardChannel.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    String str = primaryColor;
-                    if (str != "#000000" && str.length() == 7) {
-                        v.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(primaryColor)));
-                    } else {
-                        v.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9e8a4c")));
-                    }
+                    holder.cardChannel.setCardBackgroundColor(ContextCompat.getColor(context, R.color.card_focused));
+                    holder.txtChannel.setTranslationX(40);
                 } else {
-                    v.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                    holder.cardChannel.setCardBackgroundColor(ContextCompat.getColor(context, R.color.transparent));
+                    holder.txtChannel.setTranslationX(0);
                 }
                 View.OnFocusChangeListener onFocusChangeListener = focusChangeListener;
                 if (onFocusChangeListener != null) {
@@ -79,7 +80,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
                 }
             }
         });
-        button.setText(getChannelResponse.getData().get(position).getName());
+        holder.txtChannel.setText(getChannelResponse.getData().get(position).getName());
 
     }
 
@@ -94,13 +95,15 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public Button channel;
+        CardView cardChannel;
+        TextView txtChannel;
 
         public ViewHolder(View itemView) {
             super(itemView);
             Button button = (Button) itemView.findViewById(R.id.channel_name);
-            this.channel = button;
-            button.setOnClickListener(this);
+            cardChannel = itemView.findViewById(R.id.card_channel);
+            txtChannel = itemView.findViewById(R.id.txt_channel);
+            cardChannel.setOnClickListener(this);
 
 
         }

@@ -41,14 +41,14 @@ public class HotelProfile {
                     listener.onGetProfile(logoWhite, string);
 
                 } else {
-                    Toast.makeText(context, ""+response.message(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, ""+response.message(), Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<GetHotelProfileResponse> call, Throwable t) {
-                Toast.makeText(context, "Gagal mendapatkan response dari server bang", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Gagal mendapatkan response dari server bang", Toast.LENGTH_SHORT).show();
             }
         });
     }
