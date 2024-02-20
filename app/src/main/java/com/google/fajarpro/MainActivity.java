@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.DeviceInfo;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -45,6 +47,7 @@ import com.google.fajarpro.adapter.ChannelAdapter;
 import com.google.fajarpro.response.GetChannelResponse;
 import com.google.fajarpro.retrofit.RetrofitClient;
 import com.google.fajarpro.util.Key;
+import com.google.fajarpro.util.SharedPreferencesUtil;
 import com.google.fajarpro.util.SpacesItemDecoration;
 import com.squareup.picasso.Picasso;
 
@@ -64,7 +67,7 @@ import retrofit2.Response;
  */
 public class MainActivity extends FragmentActivity {
 
-    private static final String API_KEY = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMwIiwibmFtZSI6IkRlc2EgQWxhbWFuaXMiLCJicmFuY2giOiJDaXJlYm9uIiwiY2l0eSI6IkNpcmVib24iLCJwcm92aW5jZSI6Ikphd2EgQmFyYXQiLCJzdGF0ZSI6IkluZG9uZXNpYSIsImlhdCI6MTY3NDA4ODA0NiwiaXNzIjoiZW5vdmF0dGUifQ.4oa3PryJgK6oSx3t8LmTlpVltwI7eLiQHRI6z50cPXg";
+    private static final String API_KEY = new Key().getAPI_KEY();
     private static final String BASE_URL = "http://103.30.87.52:8001";
     private static final int PERMISSION_REQUEST_CODE = 200;
     private static final int STORAGE_PERMISSION_CODE = 23;
@@ -72,7 +75,7 @@ public class MainActivity extends FragmentActivity {
     private ExoPlayer player;
     private StyledPlayerView playerView;
     private StyledPlayerView playerViewFullscreen;
-    private TextView selectedChannel;
+    private TextView selectedChannel, txtGuestName;
     private boolean isFullscreen = false;
     private final HotelProfile profile = new HotelProfile();
     private String selectedUrl = "";
@@ -107,6 +110,7 @@ public class MainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
 
         this.selectedChannel = (TextView) findViewById(R.id.channel_selected);
         getHotelProfile();
@@ -116,6 +120,10 @@ public class MainActivity extends FragmentActivity {
 //        } else {
 //            requestForStoragePermissions();
 //        }
+    }
+
+    private void initView(){
+        txtGuestName = findViewById(R.id.txt_guest_name);
     }
 
 
@@ -461,22 +469,32 @@ public class MainActivity extends FragmentActivity {
 
     private void loadLogo(String url) {
         ImageView logo = (ImageView) findViewById(R.id.logo);
-        Picasso.get().load(R.drawable.hotel_default_logo).into(logo);
+        Glide
+                .with(getApplicationContext())
+                .load(url)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(logo);
     }
 
     private void getHotelProfile() {
-        this.profile.getProfile(getApplicationContext(), API_KEY, new HotelProfile.Listener() { // from class: com.infinitv.tv.MainActivity$$ExternalSyntheticLambda1
-            @Override // com.infinitv.p007tv.HotelProfile.Listener
-            public final void onGetProfile(String str, String str2) {
-                MainActivity.this.m367lambda$getHotelProfile$0$cominfinitvtvMainActivity(str, str2);
+        this.profile.getProfile(getApplicationContext(), API_KEY, new HotelProfile.Listener() {
+            @Override
+            public void onGetProfile(String logoWhite, String str2) {
+                loadLogo(logoWhite);
+                getRoomDetails();
+                primaryColor = primaryColor;
+                getChannel();
             }
         });
     }
 
-    public /* synthetic */ void m367lambda$getHotelProfile$0$cominfinitvtvMainActivity(String logoWhite, String primaryColor) {
-        loadLogo("http://103.30.87.52:8001/files/" + logoWhite);
-        this.primaryColor = primaryColor;
-        getChannel();
+    private void getRoomDetails(){
+        profile.getRoomDetail(getApplicationContext(), API_KEY, "102", new HotelProfile.RoomListener() {
+            @Override
+            public void onGetRoomDetails(String guestName) {
+                txtGuestName.setText(guestName);
+            }
+        });
     }
 
 //    private void getTVChannels() {
