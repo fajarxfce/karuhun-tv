@@ -158,7 +158,10 @@ public class MainActivity extends FragmentActivity {
         ExoPlayer build = new ExoPlayer.Builder(getApplicationContext(), renderersFactory)
                 .setLoadControl(new CustomLoadControl.Builder()
                         .setBufferDurationsMs(3000, 8000, 500, 1500)
-                        .setPrioritizeTimeOverSizeThresholds(true).build()).build();
+                        .setPrioritizeTimeOverSizeThresholds(true)
+                        .build()
+                )
+                .build();
         this.player = build;
         build.addListener(new Player.Listener() {
             @Override
