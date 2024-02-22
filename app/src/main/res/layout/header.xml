@@ -60,7 +60,7 @@
             android:fontFamily="@font/joanna"
             android:text="Welcome, "
             android:textColor="@color/lb_tv_white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/txt_guest_name"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,7 +72,7 @@
             android:fontFamily="@font/joanna"
             android:text="Guest Name"
             android:textColor="@color/lb_tv_white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -91,9 +91,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/joanna"
             android:text="Room "
-            android:visibility="gone"
             android:textColor="@color/lb_tv_white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/txt_guest_name"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,9 +103,8 @@
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/joanna"
             android:text="0"
-            android:visibility="gone"
             android:textColor="@color/lb_tv_white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -142,7 +140,7 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"

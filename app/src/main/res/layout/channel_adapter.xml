@@ -20,7 +20,8 @@
         android:layout_gravity="center_vertical"
         android:text="Channel"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="12sp"
+        android:singleLine="true"
         android:textStyle="bold" />
 
 

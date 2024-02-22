@@ -22,7 +22,7 @@ public class HotelProfile {
     public String primaryColor = "";
 
     public interface Listener {
-        void onGetProfile(String logoWhite, String str2);
+        void onGetProfile(String logoWhite, String color, String greeting);
     }
 
     public interface RoomListener {
@@ -41,10 +41,11 @@ public class HotelProfile {
 
 
                     logoWhite = profile.getData().getProfile().getLogo_white();
+                    String greeting = profile.getData().getDefault_greeting();
                     String string = "#C09C50";
                     primaryColor = string;
                     initiated = true;
-                    listener.onGetProfile(logoWhite, string);
+                    listener.onGetProfile(logoWhite, string, greeting);
 
                 } else {
 //                    Toast.makeText(context, ""+response.message(), Toast.LENGTH_SHORT).show();

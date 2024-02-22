@@ -1,7 +1,9 @@
 package com.google.fajarpro;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -10,13 +12,16 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -75,13 +80,15 @@ public class MainActivity extends FragmentActivity {
     private ExoPlayer player;
     private StyledPlayerView playerView;
     private StyledPlayerView playerViewFullscreen;
-    private TextView selectedChannel, txtGuestName;
+    private TextView selectedChannel, txtGuestName, txtGreeting, txtRoomNumber;
     private boolean isFullscreen = false;
     private final HotelProfile profile = new HotelProfile();
     private String selectedUrl = "";
     private String primaryColor = "";
     private String retryUrl = "";
     private int retry = 0;
+    SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this);
+    SharedPreferences sharedPreferences;
 
     public MainActivity() {
     }
@@ -111,10 +118,18 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-
         this.selectedChannel = (TextView) findViewById(R.id.channel_selected);
-        getHotelProfile();
-        updateDateText();
+
+        if (sharedPreferencesUtil.getPref("room_number", getApplicationContext()) == null) {
+            enterRoomNumber();
+        } else {
+            getHotelProfile();
+            updateDateText();
+            txtRoomNumber.setText(sharedPreferencesUtil.getPref("room_number", MainActivity.this));
+        }
+
+
+
 //        if (checkStoragePermissions()) {
 //            loadBackgroundImage();
 //        } else {
@@ -122,8 +137,52 @@ public class MainActivity extends FragmentActivity {
 //        }
     }
 
+    public void enterRoomNumber() {
+
+        sharedPreferences = getSharedPreferences("my_data", MODE_PRIVATE);
+
+        // Buat tampilan dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Masukkan Nomor Room");
+
+        // Tambahkan tampilan EditText untuk memasukkan password
+        final EditText input = new EditText(this);
+        input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | InputType.TYPE_DATETIME_VARIATION_NORMAL);
+        builder.setView(input);
+
+        // Atur tombol positif dan negatif
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String enteredPassword = input.getText().toString();
+
+                sharedPreferencesUtil.setPref("room_number", enteredPassword, getApplicationContext());
+
+                Toast.makeText(MainActivity.this, enteredPassword, Toast.LENGTH_SHORT).show();
+                txtRoomNumber.setText(enteredPassword);
+                getHotelProfile();
+                updateDateText();
+            }
+        });
+
+        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Batalkan tindakan
+                dialog.cancel();
+            }
+        });
+
+        // Tampilkan dialog
+        builder.show();
+
+
+    }
+
     private void initView(){
         txtGuestName = findViewById(R.id.txt_guest_name);
+        txtGreeting = findViewById(R.id.txt_greeting);
+        txtRoomNumber = findViewById(R.id.txt_room_number);
     }
 
 
@@ -481,24 +540,22 @@ public class MainActivity extends FragmentActivity {
 
     private void getHotelProfile() {
         this.profile.getProfile(getApplicationContext(), API_KEY, new HotelProfile.Listener() {
+
             @Override
-            public void onGetProfile(String logoWhite, String str2) {
+            public void onGetProfile(String logoWhite, String color, String greeting) {
                 loadLogo(logoWhite);
-                getRoomDetails();
-                primaryColor = primaryColor;
-                getChannel();
+                txtGreeting.setText(greeting + ", ");
             }
         });
-    }
 
-    private void getRoomDetails(){
-        profile.getRoomDetail(getApplicationContext(), API_KEY, "102", new HotelProfile.RoomListener() {
+        this.profile.getRoomDetail(getApplicationContext(), API_KEY,sharedPreferencesUtil.getPref("room_number", MainActivity.this), new HotelProfile.RoomListener() {
             @Override
             public void onGetRoomDetails(String guestName) {
                 txtGuestName.setText(guestName);
             }
         });
     }
+
 
 //    private void getTVChannels() {
 //        M3ULoader loader = new M3ULoader();
