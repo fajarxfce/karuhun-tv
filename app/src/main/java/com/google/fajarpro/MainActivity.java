@@ -342,6 +342,7 @@ public class MainActivity extends FragmentActivity {
             public void onPlayerErrorChanged(@Nullable PlaybackException error) {
                 Player.Listener.super.onPlayerErrorChanged(error);
                 if (error != null) {
+                    Toast.makeText(MainActivity.this, "onPlayerErrorChanged", Toast.LENGTH_SHORT).show();
                     MainActivity mainActivity = MainActivity.this;
                     mainActivity.retryUrl = mainActivity.selectedUrl;
                     MainActivity.access$212(MainActivity.this, 1);
